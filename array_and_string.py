@@ -35,3 +35,23 @@ def URLify(str, size):
   return output
 
 print(URLify("aa a", 4))
+
+# O(n) space
+# O(n) time
+def palindrome_permutation(str):
+  counts = {}
+  odd_count = 0
+  for s in str:
+    if s == " ":
+      continue
+    counts[s] = counts.get(s, 0) + 1
+    if counts[s] % 2 != 0:
+      odd_count += 1
+    else:
+      odd_count -= 1
+  if len(str) % 2 == 0:
+    return odd_count == 1
+  else:
+    return odd_count == 0
+
+print(palindrome_permutation("tact coaa"))
