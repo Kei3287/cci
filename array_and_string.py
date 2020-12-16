@@ -1,4 +1,5 @@
-
+# O(1) space for 256 ASCII chars
+# O(n) time
 def is_unique(str):
   count = {}
   for s in str:
@@ -10,6 +11,8 @@ def is_unique(str):
 
 print(is_unique("avda"))
 
+# O(1) space for 256 ASCII chars
+# O(n) time
 def check_permutation(str1, str2):
   if len(str1) != len(str2):
     return False
