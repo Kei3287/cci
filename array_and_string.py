@@ -144,3 +144,39 @@ def rotate_matrix(mat):
 print("Test 1.7")
 print(rotate_matrix([[0, 1, 2], [3, 4, 5], [6, 7, 8]]))
 print(rotate_matrix([[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15]]))
+print()
+
+# O(M + N) space
+# O(MN) time
+def zero_matrix(mat):
+  rows_of_0 = [False] * len(mat)
+  cols_of_0 = [False] * len(mat[0])
+
+  for i in range(len(mat)):
+    for j in range(len(mat[0])):
+      if mat[i][j] == 0:
+        rows_of_0[i] = True
+        cols_of_0[j] = True
+  for i in range(len(rows_of_0)):
+    if rows_of_0[i]:
+      mat = nullify_row(mat, i)
+  for j in range(len(cols_of_0)):
+    if cols_of_0[j]:
+      mat = nullify_col(mat, j)
+  return mat
+
+def nullify_row(mat, i):
+  for c in range(len(mat[0])):
+    mat[i][c] = 0
+  return mat
+
+def nullify_col(mat, j):
+  for r in range(len(mat)):
+    mat[r][j] = 0
+  return mat
+
+print("Test 1.8")
+print(zero_matrix([[1, 2, 0], [4, 5, 6], [7, 8, 9], [10, 11, 12]]))
+print(zero_matrix([[1, 2, 3], [4, 0, 6], [7, 8, 9], [10, 11, 12]]))
+print()
+
