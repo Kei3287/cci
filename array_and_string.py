@@ -9,7 +9,9 @@ def is_unique(str):
       count[s] = 1
   return True
 
+print("Test 1.1")
 print(is_unique("avda"))
+print()
 
 # O(1) space for 256 ASCII chars
 # O(n) time
@@ -22,8 +24,9 @@ def check_permutation(str1, str2):
     counts[ord(str2[i])] = counts[ord(str2[i])] - 1
   return sum(counts) == 0
 
+print("Test 1.2")
 print(check_permutation("avva", "aavv"))
-
+print()
 
 def URLify(str, size):
   output = ""
@@ -34,7 +37,9 @@ def URLify(str, size):
       output += str[i]
   return output
 
+print("Test 1.3")
 print(URLify("aa a", 4))
+print()
 
 # O(n) space
 # O(n) time
@@ -54,4 +59,37 @@ def palindrome_permutation(str):
   else:
     return odd_count == 0
 
+print("Test 1.4")
 print(palindrome_permutation("tact coaa"))
+print()
+
+def one_away(str1, str2):
+  if len(str1) == len(str2):
+    diff = 0
+    for i in range(len(str1)):
+      if str1[i] != str2[i]:
+        diff += 1
+    return diff <= 1
+  elif len(str1) - len(str2) == 1:
+    removal = 0
+    for i in range(len(str1)):
+      if removal == 2:
+        return False
+      if str1[i] != str2[i-removal]:
+        removal += 1
+    return True
+  elif len(str1) - len(str2) == -1:
+    removal = 0
+    for i in range(len(str1)):
+      if removal == 2:
+        return False
+      if str1[i] != str2[i+removal]:
+        removal += 1
+    return True
+
+print("Test 1.5")
+print(one_away("avb", "ab"))
+print(one_away("avb", "acb"))
+print(one_away("avb", "avbx"))
+print(one_away("aaa", "avv"))
+print()
