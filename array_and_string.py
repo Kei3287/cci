@@ -1,3 +1,5 @@
+import math
+
 # O(1) space for 256 ASCII chars (There's only 128 printable characters, but extended ASCII has 256)
 # O(n) time
 def is_unique(str1):
@@ -117,3 +119,28 @@ print(string_compression("aabbb"))
 print(string_compression("avc"))
 print(string_compression("bbbbc"))
 print()
+
+# O(1) space
+# O(n^2) time because it goes through each element and copy over to the right position
+def rotate_matrix(mat):
+  n = len(mat[0])
+  for i in range(n//2):
+    first = i
+    last = n - i - 1
+    # swap the ith layer circle
+    for j in range(last - first):
+      # save top
+      temp = mat[first][first+j]
+      # top <- left
+      mat[first][first+j] = mat[last-j][first]
+      # left <- bottom
+      mat[last-j][first] = mat[last][last-j]
+      # bottom <- right
+      mat[last][last-j] = mat[first+j][last]
+      # right <- top
+      mat[first+j][last] = temp
+  return mat
+
+print("Test 1.7")
+print(rotate_matrix([[0, 1, 2], [3, 4, 5], [6, 7, 8]]))
+print(rotate_matrix([[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15]]))
