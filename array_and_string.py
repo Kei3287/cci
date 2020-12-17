@@ -63,6 +63,8 @@ print("Test 1.4")
 print(palindrome_permutation("tact coaa"))
 print()
 
+# O(1) space
+# O(n) time
 def one_away(str1, str2):
   if len(str1) == len(str2):
     diff = 0
