@@ -35,6 +35,7 @@ class ThreeInOne():
     def is_empty(self, stack_num):
         return self.sizes[stack_num - 1] == 0
 
+print("Test 3.1")
 stacks = ThreeInOne(3)
 stacks.push(1, 1)
 print(stacks.pop(1))
@@ -83,6 +84,7 @@ class StackMin():
         except Exception:
             print(traceback.format_exc())
 
+print("Test 3.2")
 stack_min = StackMin()
 stack_min.push(1)
 stack_min.push(0)
@@ -90,4 +92,57 @@ print(stack_min.get_min())
 stack_min.pop()
 print(stack_min.get_min())
 stack_min.pop()
+print()
+
+
+class SetOfStacks():
+    """
+        Create a new stack when the previous stack exceeds some threshold.
+        pop_at(int index) should return the pop operation on a specific sub-stack
+
+        O(n) space
+        O(1) time for push & pop & is_empty
+        O(n) time for pop_at
+    """
+    def __init__(self, threshold):
+        self.threshold = threshold
+        self.stacks = []
+
+    def push(self, val):
+        if len(self.stacks) == 0 or len(self.stacks[-1]) >= self.threshold:
+            self.stacks.append([val])
+        else:
+            self.stacks[-1].append(val)
+
+    def pop(self):
+        try:
+            if len(self.stacks) == 0:
+                raise Exception('stack is empty')
+            return self.stacks[-1].pop()
+        except Exception:
+            print(traceback.format_exc())
+
+    def is_empty(self):
+        return len(self.stacks) == 0
+
+    def pop_at(self, i):
+        try:
+            if len(self.stacks[i-1]) == 0:
+                raise Exception('stack is empty')
+            val = self.stacks[i-1].pop()
+            if len(self.stacks[i-1]) == 0:
+                self.stacks.pop(i-1)
+            return val
+
+        except Exception:
+            print(traceback.format_exc())
+
+print("Test 3.3")
+stack_sets = SetOfStacks(2)
+stack_sets.push(1)
+stack_sets.push(2)
+stack_sets.push(3)
+print(stack_sets.pop_at(1))
+print(stack_sets.pop_at(1))
+print(stack_sets.pop())
 print()
