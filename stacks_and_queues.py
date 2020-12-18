@@ -9,6 +9,7 @@ class ThreeInOne():
         O(1) time for all methods
     """
     num_of_stacks = 3
+
     def __init__(self, stack_size):
         self.stack_size = stack_size
         self.values = [0] * self.num_of_stacks * self.stack_size
@@ -18,7 +19,8 @@ class ThreeInOne():
         try:
             if self.sizes[stack_num - 1] == self.stack_size:
                 raise Exception('stack is full')
-            self.values[(stack_num - 1) * self.stack_size + self.sizes[stack_num - 1]] = val
+            self.values[(stack_num - 1) * self.stack_size +
+                        self.sizes[stack_num - 1]] = val
             self.sizes[stack_num - 1] += 1
         except Exception:
             print(traceback.format_exc())
@@ -35,6 +37,7 @@ class ThreeInOne():
     def is_empty(self, stack_num):
         return self.sizes[stack_num - 1] == 0
 
+
 print("Test 3.1")
 stacks = ThreeInOne(3)
 stacks.push(1, 1)
@@ -48,11 +51,13 @@ print(stacks.pop(3))
 print(stacks.pop(3))
 print()
 
+
 class StackMin():
     """
         get_min method should return its min value in O(1) time
         all methods should run in O(1) time
     """
+
     def __init__(self):
         self.values = []
         self.min_values = []
@@ -84,6 +89,7 @@ class StackMin():
         except Exception:
             print(traceback.format_exc())
 
+
 print("Test 3.2")
 stack_min = StackMin()
 stack_min.push(1)
@@ -104,6 +110,7 @@ class SetOfStacks():
         O(1) time for push & pop & is_empty
         O(n) time for pop_at
     """
+
     def __init__(self, threshold):
         self.threshold = threshold
         self.stacks = []
@@ -136,6 +143,7 @@ class SetOfStacks():
 
         except Exception:
             print(traceback.format_exc())
+
 
 print("Test 3.3")
 stack_sets = SetOfStacks(2)
