@@ -8,9 +8,9 @@ class ThreeInOne():
         Implement three stacks using only one array
         O(1) time for all methods
     """
+    num_of_stacks = 3
     def __init__(self, stack_size):
         self.stack_size = stack_size
-        self.num_of_stacks = 3
         self.values = [0] * self.num_of_stacks * self.stack_size
         self.sizes = [0] * self.num_of_stacks
 
