@@ -226,3 +226,54 @@ print(zero_matrix([[1, 2, 0], [4, 5, 6], [7, 8, 9], [10, 11, 12]]))
 print(zero_matrix([[1, 2, 3], [4, 0, 6], [7, 8, 9], [10, 11, 12]]))
 print()
 
+
+def string_rotation(str1, str2):
+    """
+        Check if str2 is a rotation of str1 using only one call to substring
+        O(n) space
+        O(n) time
+    """
+    if len(str1) != len(str2):
+        return False
+    return substring(str2 + str2, str1)
+
+
+def substring(str1, target):
+    """
+        Check if the target is a substring of str1 in str1 in O(M+N) time using Z-algorithm:
+        Z_string = target + $ + str1 (assuming $ doesn't exist in str1)
+        Z[i] = length of longest substring in Z_string[i:] that match the prefix of Z_string
+        return true if there is equal to the length of target
+
+        O(n+m) space
+        O(n+m) time
+    """
+    z_string = target + '$' + str1
+    z = [0] * len(z_string)
+    left, right = 0, 0
+    for i in range(1, len(z_string)):
+        if i > right:
+            left, right = i, i
+            # calculate z value for index i
+            while z_string[right] == z_string[right-left] and right < len(z_string) - 1:
+                right += 1
+            z[i] = right - left
+            right -= 1
+        else:
+            k = i - left
+            if z[k] < right - i + 1:
+                z[i] = z[k]
+            else:
+                left = i
+                while right < len(z_string) and z[right] == z[right - left]:
+                    right += 1
+                z[i] = right - left
+                right -= 1
+    return any(map(lambda x: x == len(target), z))
+
+
+print("Test 1.9")
+print(substring("abccdea", "cde"))
+print(string_rotation("erbottlewat", "waterbottle"))
+print(string_rotation("wrbottlewat", "waterbottle"))
+print()
