@@ -195,3 +195,23 @@ print(q.dequeue())
 q.enqueue(3)
 print(q.dequeue())
 print(q.dequeue())
+
+def sort_stack(stc):
+    """
+        Sort the stack such that the smallest elements are on the top.
+        (You can only use only one extra stack.)
+        O(N) space
+        O(N^2) time
+    """
+    stc2 = []
+    while stc:
+        temp = stc.pop()
+        for i in reversed(range(len(stc2))):
+            if stc2[i] >= temp:
+                break
+            stc.append(stc2.pop())
+        stc2.append(temp)
+    return stc2
+
+print("Test 3.5")
+print(sort_stack([2, 3, 1, 4]))
