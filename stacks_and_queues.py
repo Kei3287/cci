@@ -215,3 +215,66 @@ def sort_stack(stc):
 
 print("Test 3.5")
 print(sort_stack([2, 3, 1, 4]))
+
+class AnimalShelter():
+    """
+        People must adopt the oldest animal.
+    """
+    order = 0
+    def __init__(self):
+        self.dogs = []
+        self.cats = []
+
+    def enqueue(self, animal):
+        animal.order = self.order
+        self.order += 1
+        if isinstance(animal, Dog):
+            self.dogs.append(animal)
+        else:
+            self.cats.append(animal)
+
+    def dequeueAny(self):
+        if len(self.dogs) == 0 and len(self.cats) == 0:
+            return
+        elif len(self.dogs) == 0:
+            return self.cats.pop(0)
+        elif len(self.cats) == 0:
+            return self.dogs.pop(0)
+
+        if self.dogs[0].order > self.cats[0].order:
+            return self.cats.pop(0)
+        else:
+            return self.dogs.pop(0)
+
+    def dequeueDog(self):
+        return self.dogs.pop(0)
+
+    def dequeueCat(self):
+        return self.cats.pop(0)
+class Animal():
+    def __init__(self, name):
+        self.order = None
+        self.name = name
+
+class Dog(Animal):
+    def __init__(self, name):
+        super().__init__(name)
+
+class Cat(Animal):
+    def __init__(self, name):
+        super().__init__(name)
+
+print("Test 3.6")
+animal_shelter = AnimalShelter()
+c1 = Cat("meow")
+c2 = Cat("meow meow")
+d1 = Dog("woof")
+d2 = Dog("woof woof")
+animal_shelter.enqueue(c1)
+animal_shelter.enqueue(d1)
+animal_shelter.enqueue(c2)
+animal_shelter.enqueue(d2)
+print(animal_shelter.dequeueDog().name)
+print(animal_shelter.dequeueAny().name)
+print(animal_shelter.dequeueAny().name)
+print(animal_shelter.dequeueAny().name)
