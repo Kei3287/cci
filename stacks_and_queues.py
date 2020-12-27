@@ -154,3 +154,44 @@ print(stack_sets.pop_at(1))
 print(stack_sets.pop_at(1))
 print(stack_sets.pop())
 print()
+
+class MyQueue():
+    """
+        Implement a Queue using two stacks
+        O(n) space
+        O(1) amortized time:
+    """
+    def __init__(self):
+        self.new_items = []
+        self.old_items = []
+        self.size = 0
+
+    def enqueue(self, val):
+        self.new_items.append(val)
+        self.size += 1
+
+    def dequeue(self):
+        try:
+            if self.is_empty():
+                raise Exception('stack is empty')
+            if len(self.old_items) == 0:
+                for _ in range(len(self.new_items)):
+                    val = self.new_items.pop()
+                    self.old_items.append(val)
+            val = self.old_items.pop()
+            self.size -= 1
+            return val
+        except Exception:
+            print(traceback.format_exc())
+
+    def is_empty(self):
+        return self.size == 0
+
+print("Test 3.4")
+q = MyQueue()
+q.enqueue(1)
+q.enqueue(2)
+print(q.dequeue())
+q.enqueue(3)
+print(q.dequeue())
+print(q.dequeue())
