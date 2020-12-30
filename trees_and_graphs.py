@@ -1,5 +1,5 @@
 import queue
-import collections
+from collections import deque
 
 directed_graph = {
     'A': ['B', 'C'],
@@ -70,3 +70,27 @@ print("Test 4.2")
 min_bst = min_height_bst([1, 2, 3, 4, 5])
 min_bst = min_height_bst([1, 2, 3, 4, 5, 6])
 
+def list_of_depths(bt):
+    """
+        Given a binary tree, create a liked list of all the nodes at each depth.
+          1             linked list at each depth
+         / \         => [1]
+        2   3           [2] -> [3]
+    """
+    linked_lists = []
+    current = [bt]
+    while any(current):
+        linked_lists.append(deque([n.val for n in current if n]))
+        current = find_children(current)
+    return linked_lists
+
+def find_children(lst):
+    children = []
+    for node in lst:
+        if node:
+            children.append(node.left)
+            children.append(node.right)
+    return children
+
+print("Test 4.3")
+print(list_of_depths(min_bst))
