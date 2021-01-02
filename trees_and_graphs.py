@@ -119,3 +119,26 @@ def check_height(t):
 
 print("Test 4.4")
 print(check_balanced(min_bst))
+
+def check_bst(t):
+    """
+        Given a binary tree, determine if the binary tree is binary search tree.
+        BST is defined to be a tree such that all nodes on left subtree <= current node < all nodes on right subtree.
+        <=> max value on left subtree <= current node < min value on right subtree
+        O(N) time
+        O(H) space (recursion stack)
+    """
+    return is_bst(t, -float('inf'), float('inf'))
+
+def is_bst(t, min_l, max_r):
+    if t is None:
+        return True
+    if t.val > max_r or t.val <= min_l:
+        return False
+    # When we check left subtree, all nodes on the left subtree must be less than or equal to the current node's value
+    if not (is_bst(t.left, min_l, t.val) and is_bst(t.right, t.val, max_r)):
+        return False
+    return True
+
+print("Test 4.5")
+print(check_bst(min_bst))
