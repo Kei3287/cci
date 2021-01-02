@@ -76,6 +76,8 @@ def list_of_depths(bt):
           1             linked list at each depth
          / \         => [1]
         2   3           [2] -> [3]
+        O(N) time
+        O(N) space
     """
     linked_lists = []
     current = [bt]
@@ -94,3 +96,26 @@ def find_children(lst):
 
 print("Test 4.3")
 print(list_of_depths(min_bst))
+
+
+def check_balanced(t):
+    """
+        Given a binary tree, determine if a binary tree is balanced.
+        Balanced tree is defined to be a tree such that the heights of the two subtrees
+        of any node never differ by more than one.
+        O(N) time
+        O(H) space where H is the height of the tree (H recursion call stack)
+    """
+    return check_height(t) != float('inf')
+
+def check_height(t):
+    if t is None:
+        return 0
+    height_l = check_height(t.left)
+    height_r = check_height(t.right)
+    if abs(height_l - height_r) > 1:
+        return float('inf')
+    return max(height_l, height_r) + 1
+
+print("Test 4.4")
+print(check_balanced(min_bst))
