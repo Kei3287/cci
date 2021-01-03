@@ -40,31 +40,32 @@ print()
 
 
 class Node():
-    def __init__(self, val, right = None, left = None):
+    def __init__(self, val, right = None, left = None, parent = None):
         self.val = val
         self.right = right
         self.left = left
+        self.parent = parent
 
-def min_height_bst(sorted_arr):
+def min_height_bst(sorted_arr, parent = None):
     """
         Given a sorted(increasing order) array with unique integer elements,
         create a binary tree with minimal height.
-        O(N) space
-        O(logN) time
+        O(logN) space
+        O(N) time
         If we insert each element from root instead of recursion, it will be O(NlogN) time.
     """
     n = len(sorted_arr)
     if n == 0:
         return None
     if n == 1:
-        return Node(sorted_arr[0])
+        return Node(sorted_arr[0], parent = parent)
 
     middle = len(sorted_arr) // 2
     val = sorted_arr[middle]
-    n = Node(val)
-    n.left = min_height_bst(sorted_arr[:middle])
-    n.right = min_height_bst(sorted_arr[middle+1:])
-    return n
+    root = Node(val, parent = parent)
+    root.left = min_height_bst(sorted_arr[:middle], root)
+    root.right = min_height_bst(sorted_arr[middle+1:], root)
+    return root
 
 print("Test 4.2")
 min_bst = min_height_bst([1, 2, 3, 4, 5])
@@ -142,3 +143,33 @@ def is_bst(t, min_l, max_r):
 
 print("Test 4.5")
 print(check_bst(min_bst))
+
+
+def successor(t, node):
+    """
+    Given a binary tree, find the in-order successor of a given node.
+    Assume every node has a parent pointer.
+    O(1) space
+    O(H) time
+    """
+    if node.right is not None:
+        return min_value(node.right)
+
+    p = node.parent
+    while p is not None:
+        if p.right != node:
+            break
+        node = p
+        p = p.parent
+    return p
+
+def min_value(t):
+    current = t
+    while current is not None:
+        if current.left is None:
+            return t
+        current = current.left
+    return current
+
+print("Test 4.6")
+print(successor(min_bst, min_bst.left.right).val)
