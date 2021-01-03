@@ -3,6 +3,7 @@ from collections import deque
 from collections import defaultdict
 import sys
 import traceback
+import enum
 
 directed_graph = {
     'A': ['B', 'C'],
@@ -178,6 +179,15 @@ print("Test 4.6")
 print(successor(min_bst, min_bst.left.right).val)
 
 
+
+class Status(enum.Enum):
+    NOT_VISITED = 0
+    VISITING = 1
+    VISITED = 2
+
+def default_status():
+    return Status.NOT_VISITED
+
 def build_order(projects, dependencies):
     """
     Given a list of projects and a list of dependencies, find a build order that will allow
@@ -187,7 +197,7 @@ def build_order(projects, dependencies):
         projects = [a, b, c]
         dependencies = [(b, a), (c, a), (c, b)] (second project is dependent on the first project.)
         => output: c -> b -> a
-    O( )
+    O(V+E) time & space where V == len(projects) and E == len(dependencies)
     """
     dependency_graph = build_dependency_graph(projects, dependencies)
     return topological_sort(dependency_graph)
@@ -201,28 +211,29 @@ def build_dependency_graph(projects, dependencies):
     return graph
 
 def topological_sort(graph):
-    visited = set()
+    visited = defaultdict(default_status)
     reverse_post_order = [] # sink of the graph will be at the beginning of the list.
-    cycle_stack = []
     for v in graph.keys():
         if v not in visited:
-                dfs(graph, v, visited, reverse_post_order, cycle_stack)
+                dfs(graph, v, visited, reverse_post_order)
     return reverse_post_order[::-1]
 
-def dfs(graph, vertex, visited, reverse_post_order, cycle_stack):
-    cycle_stack.append(vertex)
-    visited.add(vertex)
+def dfs(graph, vertex, visited, reverse_post_order):
+    # If the vertex is already in the recursion stack, we have a back edge
+    try:
+        if visited[vertex] == Status.VISITING:
+            raise Exception("there is a cycle in the graph.")
+    except Exception:
+        print(traceback.format_exc())
+        sys.exit(0)
+
+    visited[vertex] = Status.VISITING
     for v in graph[vertex]:
-        try:
-            if v in visited and v in cycle_stack:
-                raise Exception("there is a cycle in the graph.")
-        except Exception:
-            print(traceback.format_exc())
-            sys.exit(0)
-        if v not in visited:
-            dfs(graph, v, visited, reverse_post_order, cycle_stack)
+        if visited[v] != Status.VISITED:
+            dfs(graph, v, visited, reverse_post_order)
     reverse_post_order.append(vertex)
-    cycle_stack.pop()
+    visited[vertex] = Status.VISITED
+
 
 print("Test 4.7")
 print(build_order(['a', 'b', 'c'], [('b', 'a'), ('c', 'a'), ('c', 'b')]))
