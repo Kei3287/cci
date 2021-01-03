@@ -1,5 +1,8 @@
 import queue
 from collections import deque
+from collections import defaultdict
+import sys
+import traceback
 
 directed_graph = {
     'A': ['B', 'C'],
@@ -173,3 +176,54 @@ def min_value(t):
 
 print("Test 4.6")
 print(successor(min_bst, min_bst.left.right).val)
+
+
+def build_order(projects, dependencies):
+    """
+    Given a list of projects and a list of dependencies, find a build order that will allow
+    the projects to be built. All of a project's dependencies must be built before the project is.
+    If there is no valid build order, return an error.
+    ex)
+        projects = [a, b, c]
+        dependencies = [(b, a), (c, a), (c, b)] (second project is dependent on the first project.)
+        => output: c -> b -> a
+    O( )
+    """
+    dependency_graph = build_dependency_graph(projects, dependencies)
+    return topological_sort(dependency_graph)
+
+def build_dependency_graph(projects, dependencies):
+    graph = defaultdict(list)
+    for v in projects:
+        graph[v] = []
+    for dep in dependencies:
+        graph[dep[0]].append(dep[1])
+    return graph
+
+def topological_sort(graph):
+    visited = set()
+    reverse_post_order = [] # sink of the graph will be at the beginning of the list.
+    cycle_stack = []
+    for v in graph.keys():
+        if v not in visited:
+                dfs(graph, v, visited, reverse_post_order, cycle_stack)
+    return reverse_post_order[::-1]
+
+def dfs(graph, vertex, visited, reverse_post_order, cycle_stack):
+    cycle_stack.append(vertex)
+    visited.add(vertex)
+    for v in graph[vertex]:
+        try:
+            if v in visited and v in cycle_stack:
+                raise Exception("there is a cycle in the graph.")
+        except Exception:
+            print(traceback.format_exc())
+            sys.exit(0)
+        if v not in visited:
+            dfs(graph, v, visited, reverse_post_order, cycle_stack)
+    reverse_post_order.append(vertex)
+    cycle_stack.pop()
+
+print("Test 4.7")
+print(build_order(['a', 'b', 'c'], [('b', 'a'), ('c', 'a'), ('c', 'b')]))
+print(build_order(['a', 'b', 'c'], [('b', 'a'), ('c', 'a'), ('c', 'b'), ('b', 'c')]))
