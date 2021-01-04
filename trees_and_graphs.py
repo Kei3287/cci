@@ -55,7 +55,10 @@ def min_height_bst(sorted_arr, parent = None):
         Given a sorted(increasing order) array with unique integer elements,
         create a binary tree with minimal height.
         O(logN) space
-        O(N) time
+        O(N) time (T[N] = 2T[N/2] + C = 4T[N/4] + 2C + C = ... = 2^{logN} * T[1] + SUM_0-logN {2^i} = N + N = O(N))
+        Geometric Series: for c > 1, 1+C+C^2+...+C^k = SUM_0-k {C^i} = O(C^k)
+
+        OR SUM_0-logN {work per level} = SUM_0-logN {(work per recursive call) * (# of recursive calls per level)} = SUM_0-logN {1 * 2^i}
         If we insert each element from root instead of recursion, it will be O(NlogN) time.
     """
     n = len(sorted_arr)
@@ -101,6 +104,7 @@ def find_children(lst):
 
 print("Test 4.3")
 print(list_of_depths(min_bst))
+print()
 
 
 def check_balanced(t):
@@ -124,6 +128,8 @@ def check_height(t):
 
 print("Test 4.4")
 print(check_balanced(min_bst))
+print()
+
 
 def check_bst(t):
     """
@@ -147,6 +153,7 @@ def is_bst(t, min_l, max_r):
 
 print("Test 4.5")
 print(check_bst(min_bst))
+print()
 
 
 def successor(t, node):
@@ -177,7 +184,7 @@ def min_value(t):
 
 print("Test 4.6")
 print(successor(min_bst, min_bst.left.right).val)
-
+print()
 
 
 class Status(enum.Enum):
@@ -236,5 +243,37 @@ def dfs(graph, vertex, visited, reverse_post_order):
 
 
 print("Test 4.7")
+# Should print c -> b-> a
 print(build_order(['a', 'b', 'c'], [('b', 'a'), ('c', 'a'), ('c', 'b')]))
-print(build_order(['a', 'b', 'c'], [('b', 'a'), ('c', 'a'), ('c', 'b'), ('b', 'c')]))
+# Should throw an exception
+# print(build_order(['a', 'b', 'c'], [('b', 'a'), ('c', 'a'), ('c', 'b'), ('b', 'c')]))
+print()
+
+def first_common_ancestor(root, n1, n2):
+    """
+        Given two nodes in a binary tree, find the first common ancestor of two nodes.
+        (Avoid string additional node in a data structure.)
+        O(H) space
+        O(N) time
+    """
+    if root is None:
+        return None
+    if root == n1 or root == n2:
+        return root
+
+    left = first_common_ancestor(root.left, n1, n2)
+    right = first_common_ancestor(root.right, n1, n2)
+    # If n1 and n2 are on the different subtree, current node is the first common ancestor.
+    if left and right:
+        return root
+
+    if not left and not right:
+        return None
+    return left if left is not None else right
+
+print("Test 4.8")
+# Should print 4
+print(first_common_ancestor(min_bst, min_bst.left.right, min_bst.right).val)
+# Should print 2
+print(first_common_ancestor(min_bst, min_bst.left.right, min_bst.left.left).val)
+print()
