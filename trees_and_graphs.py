@@ -288,6 +288,9 @@ def bst_sequences(root):
             1   3
     """
     pass
+print("Test 4.9")
+print("pass")
+print()
 
 def check_subtree(t1, t2):
     """
@@ -312,5 +315,5 @@ min_bst1 = min_height_bst([1, 2, 2, 3, 4, 5, 6])
 min_bst2 = min_height_bst([1, 2, 2])
 # Should print True
 print(check_subtree(min_bst1, min_bst2))
-
+print()
 
