@@ -75,7 +75,7 @@ def min_height_bst(sorted_arr, parent = None):
     return root
 
 print("Test 4.2")
-min_bst = min_height_bst([1, 2, 3, 4, 5])
+min_bst1 = min_height_bst([1, 2, 3, 4, 5])
 min_bst = min_height_bst([1, 2, 3, 4, 5, 6])
 
 def list_of_depths(bt):
@@ -277,3 +277,40 @@ print(first_common_ancestor(min_bst, min_bst.left.right, min_bst.right).val)
 # Should print 2
 print(first_common_ancestor(min_bst, min_bst.left.right, min_bst.left.left).val)
 print()
+
+
+def bst_sequences(root):
+    """
+        Given a BST with distinct elements, print all possible arrays that could have led to this tree.
+        Assume a BST is created by traversing through an array from left to right and inserting each element.
+        ex)   2
+             / \        => {2,1,3},{2,3,1}
+            1   3
+    """
+    pass
+
+def check_subtree(t1, t2):
+    """
+        Given t1 and t2 with t1 being much bigger than t2. Determine if t2 is a subtree of t1.
+        O(N + kM) where N: # nodes in t1, M: # nodes in t2, k: number of t2's root value in t1
+    """
+    if t1 is None:
+        return False
+    if t1.val == t2.val:
+        return is_subtree(t1, t2)
+    return check_subtree(t1.left, t2) or check_subtree(t1.right, t2)
+
+def is_subtree(t1, t2):
+    if t1 is None and t2 is None:
+        return True
+    elif t1 is None or t2 is None or t1.val != t2.val:
+        return False
+    return is_subtree(t1.left, t2.left) and is_subtree(t1.right, t2.right)
+
+print("Test 4.10")
+min_bst1 = min_height_bst([1, 2, 2, 3, 4, 5, 6])
+min_bst2 = min_height_bst([1, 2, 2])
+# Should print True
+print(check_subtree(min_bst1, min_bst2))
+
+
