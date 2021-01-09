@@ -4,6 +4,7 @@ from collections import defaultdict
 import sys
 import traceback
 import enum
+import random
 
 directed_graph = {
     'A': ['B', 'C'],
@@ -317,3 +318,56 @@ min_bst2 = min_height_bst([1, 2, 2])
 print(check_subtree(min_bst1, min_bst2))
 print()
 
+class RandomNode():
+    """
+        Binary tree node class which, in addition to insert, find, and delete, has a method get_random_node() which returns a random node from the tree.
+        All nodes should be equally likely to be chosen.
+    """
+    def __init__(self, val, right = None, left = None, parent = None):
+        self.val = val
+        self.right = right
+        self.left = left
+        self.parent = parent
+        self.size = 1
+
+    def insert_in_order(self, val):
+        if val < self.val:
+            if self.left is None:
+                self.left = RandomNode(val)
+            else:
+                self.left.insert_in_order(val)
+        else:
+            if self.right is None:
+                self.right = RandomNode(val)
+            else:
+                self.right.insert_in_order(val)
+        self.size += 1
+
+    def find(self, val):
+        if val == self.val:
+            return val
+        elif val < self.val and self.left is not None:
+            return self.left.find(val)
+        elif val > self.val and self.right is not None:
+            return self.right.find(val)
+        return None
+
+    def get_random_node(self):
+        rand = random.randint(0, self.size-1)
+        leftsize = 0 if self.left is None else self.left.size
+        if rand < leftsize:
+            return self.left.get_random_node()
+        elif rand == leftsize:
+            return self.val
+        return self.right.get_random_node()
+
+print("Test 4.10")
+randNode = RandomNode(1)
+randNode.insert_in_order(0)
+randNode.insert_in_order(3)
+randNode.insert_in_order(100)
+print(randNode.get_random_node())
+print(randNode.get_random_node())
+print(randNode.get_random_node())
+print(randNode.get_random_node())
+print()
