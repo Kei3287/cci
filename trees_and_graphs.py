@@ -361,7 +361,7 @@ class RandomNode():
             return self.val
         return self.right.get_random_node()
 
-print("Test 4.10")
+print("Test 4.11")
 randNode = RandomNode(1)
 randNode.insert_in_order(0)
 randNode.insert_in_order(3)
@@ -371,3 +371,49 @@ print(randNode.get_random_node())
 print(randNode.get_random_node())
 print(randNode.get_random_node())
 print()
+
+def paths_with_sum(root, target_sum):
+    """
+        Given a binary tree in which each node contains an integer,
+        count the number of paths that sum to a given value. (The path doesn't need to start at root and end at leaf.)
+        O(H) space
+        O(N) time
+
+        1 5 3 3
+        |-| => run_sum_x = 6
+        |-----| => run_sum_y = 12
+        Since run_sum_y - sun_rum_x == target, we can check if run_sum_y - target exists in hashtable to see
+        if target sum exists in between x and y.
+    """
+    path_count = defaultdict(lambda: 0)
+    path_count[0] = 1
+    return count_paths_with_sum(root, target_sum, 0, path_count, 0)
+
+def count_paths_with_sum(root, target_sum, run_sum, path_count, total_count):
+    """
+        path_count is a mapping from the running_sum to the number of occurrences of such running_sum
+    """
+    if root is None:
+        return total_count
+    run_sum += root.val
+    total_count += path_count[run_sum - target_sum]
+    path_count[run_sum] += 1
+    total_count = count_paths_with_sum(root.left, target_sum, run_sum, path_count, total_count)
+    total_count = count_paths_with_sum(root.right, target_sum, run_sum, path_count, total_count)
+    del path_count[run_sum]
+    return total_count
+
+print("Test 4.12")
+bt = RandomNode(8)
+bt.insert_in_order(5)
+bt.insert_in_order(12)
+bt.insert_in_order(3)
+bt.insert_in_order(11)
+bt.insert_in_order(15)
+bt.insert_in_order(1)
+bt.insert_in_order(3)
+bt.insert_in_order(10)
+bt.insert_in_order(2)
+bt.insert_in_order(4)
+# Should print 3
+print(paths_with_sum(bt, 11))
