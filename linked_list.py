@@ -41,18 +41,71 @@ class LinkedList():
                 prev = n
             n = n.next
 
-ll = LinkedList()
-ll.append(1)
-ll.append(2)
-ll.append(3)
-ll.append(3)
-ll.append(2)
-ll.print()
+    def kth_to_last(self, k):
+        """
+            Return the kth to last element of a singly linked list.
+            O(1) space
+            O(N) time
+        """
+        p1 = self.head
+        p2 = self.head
+        for _ in range(k):
+            if p2.next is None:
+                return None
+            p2 = p2.next
+        while p2 != None:
+            p1 = p1.next
+            p2 = p2.next
+        return p1.val
+
+    def kth_to_last_rec(self, k):
+        """
+            Recursive solution for kth to last problem
+            O(N) space
+            O(N) time
+        """
+        kth_val = 0
+        def kth_to_last_helper(head, k):
+            nonlocal kth_val
+            if head is None:
+                return 0
+            index = kth_to_last_helper(head.next, k) + 1
+            if index == k:
+                kth_val = head.val
+            return index
+        kth_to_last_helper(self.head, k)
+        return kth_val
+
+ll1 = LinkedList()
+ll1.append(1)
+ll1.append(2)
+ll1.append(3)
+ll1.append(3)
+ll1.append(2)
+ll1.print()
 
 print("Test 2.1")
-ll.remove_dups()
+ll1.remove_dups()
 # Should print 1 2 3
-ll.print()
+ll1.print()
 print()
 
 
+ll2 = LinkedList()
+ll2.append(1)
+ll2.append(2)
+ll2.append(3)
+ll2.append(4)
+ll2.append(5)
+ll2.print()
+
+print("Test 2.1")
+# Should print 5
+print(ll2.kth_to_last(1))
+# Should print 3
+print(ll2.kth_to_last(3))
+# Should print 5
+print(ll2.kth_to_last_rec(1))
+# Should print 3
+print(ll2.kth_to_last_rec(3))
+print()
