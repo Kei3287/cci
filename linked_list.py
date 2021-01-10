@@ -23,6 +23,8 @@ class LinkedList():
             print(ptr.val)
             ptr = ptr.next
 
+
+
 def remove_dups(ll):
     """
         Remove the duplicate elements.
@@ -40,6 +42,21 @@ def remove_dups(ll):
             d.add(n.val)
             prev = n
         n = n.next
+
+ll1 = LinkedList()
+ll1.append(1)
+ll1.append(2)
+ll1.append(3)
+ll1.append(3)
+ll1.append(2)
+ll1.print()
+
+print("Test 2.1")
+remove_dups(ll1)
+print("Should print 1 2 3")
+ll1.print()
+print()
+
 
 def kth_to_last(ll, k):
     """
@@ -76,40 +93,6 @@ def kth_to_last_rec(ll, k):
     kth_to_last_helper(ll.head, k)
     return kth_val
 
-def partition(ll, x):
-    """
-        Partition a linked list around a value x such that all nodes less than x comes before all nodes greater than or equal to x.
-        ex) x = 5
-            input: 3 -> 5 -> 8 -> 5 -> 10 -> 2 -> 1
-            output: 3 -> 1 -> 2 -> 10 -> 5 -> 5 -> 8 OR 3 -> 1 -> 2 -> 5 -> 8 -> 5 -> 10, etc (value x can be anywhere as long as all values less than x is before x.)
-        O(1) space
-        O(N) time
-    """
-    ptr = ll.head.next
-    prev = ll.head
-    while ptr != None:
-        if ptr.val < x:
-            ll.head = Node(ptr.val, next = ll.head)
-            prev.next = ptr.next
-        else:
-            prev = ptr
-        ptr = ptr.next
-
-ll1 = LinkedList()
-ll1.append(1)
-ll1.append(2)
-ll1.append(3)
-ll1.append(3)
-ll1.append(2)
-ll1.print()
-
-print("Test 2.1")
-remove_dups(ll1)
-print("Should print 1 2 3")
-ll1.print()
-print()
-
-
 ll2 = LinkedList()
 ll2.append(1)
 ll2.append(2)
@@ -118,7 +101,7 @@ ll2.append(4)
 ll2.append(5)
 ll2.print()
 
-print("Test 2.1")
+print("Test 2.2")
 print("Should print 5")
 print(kth_to_last(ll2, 1))
 print("Should print 3")
@@ -154,13 +137,33 @@ print("Should print 1 2 4 5")
 ll3.print()
 print()
 
+
+def partition(ll, x):
+    """
+        Partition a linked list around a value x such that all nodes less than x comes before all nodes greater than or equal to x.
+        ex) x = 5
+            input: 3 -> 5 -> 8 -> 5 -> 10 -> 2 -> 1
+            output: 3 -> 1 -> 2 -> 10 -> 5 -> 5 -> 8 OR 3 -> 1 -> 2 -> 5 -> 8 -> 5 -> 10, etc (value x can be anywhere as long as all values less than x is before x.)
+        O(1) space
+        O(N) time
+    """
+    ptr = ll.head.next
+    prev = ll.head
+    while ptr != None:
+        if ptr.val < x:
+            ll.head = Node(ptr.val, next = ll.head)
+            prev.next = ptr.next
+        else:
+            prev = ptr
+        ptr = ptr.next
+
 ll4 = LinkedList()
 ll4.append(1)
 ll4.append(11)
 ll4.append(8)
 ll4.append(4)
 ll4.append(10)
-print("Test 2.3")
+print("Test 2.4")
 partition(ll4, 10)
 print("Should print 4 8 1 11 10")
 ll4.print()
