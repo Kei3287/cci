@@ -169,3 +169,37 @@ print("Should print 4 8 1 11 10")
 ll4.print()
 print()
 
+
+def sum_lists(ll1, ll2):
+    """
+        Given two numbers represented by a linked list, where each node contains a single digit. The digits are stored in reverse order.
+        Adds the two numbers and returns the sum as a linked list.
+        ex)
+        input: (7 -> 1 -> 6) + (5 -> 7 -> 2) = 617 + 275
+        output: 2 -> 1 -> 9 = 892
+    """
+    output = LinkedList()
+    ptr1 = ll1.head
+    ptr2 = ll2.head
+    carry = 0
+    while ptr1 != None or ptr2 != None:
+        next_val1 = 0 if ptr1 is None else ptr1.val
+        next_val2 = 0 if ptr2 is None else ptr2.val
+        next_sum = next_val1 + next_val2 + carry
+        carry = 1 if next_sum >= 10 else 0
+        output.append(next_sum % 10)
+        ptr1 = ptr1.next if ptr1 != None else ptr1
+        ptr2 = ptr2.next if ptr2 != None else ptr2
+    return output
+
+num1 = LinkedList()
+num1.append(7)
+num1.append(1)
+num1.append(6)
+num2 = LinkedList()
+num2.append(5)
+num2.append(7)
+num2.append(2)
+print("Test 2.5")
+print("Should print 2 9 8")
+sum_lists(num1, num2).print()
