@@ -24,6 +24,12 @@ class LinkedList():
             ptr = ptr.next
 
     def remove_dups(self):
+        """
+            Remove the duplicate elements.
+            O(N) space
+            O(N) time
+            (O(NlogN) time & O(1) space if we sort the list at the beginning.)
+        """
         d = set()
         prev = self.head
         n = self.head
@@ -47,3 +53,6 @@ print("Test 2.1")
 ll.remove_dups()
 # Should print 1 2 3
 ll.print()
+print()
+
+
