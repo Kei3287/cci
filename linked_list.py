@@ -76,6 +76,26 @@ class LinkedList():
         kth_to_last_helper(self.head, k)
         return kth_val
 
+    def partition(self, x):
+        """
+            Partition a linked list around a value x such that all nodes less than x comes before all nodes greater than or equal to x.
+            ex) x = 5
+                input: 3 -> 5 -> 8 -> 5 -> 10 -> 2 -> 1
+                output: 3 -> 1 -> 2 -> 10 -> 5 -> 5 -> 8 OR 3 -> 1 -> 2 -> 5 -> 8 -> 5 -> 10, etc (value x can be anywhere as long as all values less than x is before x.)
+            O(1) space
+            O(N) time
+        """
+        ptr = self.head.next
+        prev = self.head
+        while ptr != None:
+            if ptr.val < x:
+                self.head = Node(ptr.val, next = self.head)
+                prev.next = ptr.next
+            else:
+                prev = ptr
+            ptr = ptr.next
+
+
 ll1 = LinkedList()
 ll1.append(1)
 ll1.append(2)
@@ -134,3 +154,16 @@ delete_middle_node(ll3.head.next.next)
 print("Should print 1 2 4 5")
 ll3.print()
 print()
+
+ll4 = LinkedList()
+ll4.append(1)
+ll4.append(11)
+ll4.append(8)
+ll4.append(4)
+ll4.append(10)
+print("Test 2.3")
+ll4.partition(10)
+print("Should print 4 8 1 11 10")
+ll4.print()
+print()
+
