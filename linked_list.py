@@ -177,6 +177,9 @@ def sum_lists(ll1, ll2):
         ex)
         input: (7 -> 1 -> 6) + (5 -> 7 -> 2) = 617 + 275
         output: 2 -> 1 -> 9 = 892
+
+        O(N+M) space
+        O(N+M) time
     """
     output = LinkedList()
     ptr1 = ll1.head
@@ -203,3 +206,4 @@ num2.append(2)
 print("Test 2.5")
 print("Should print 2 9 8")
 sum_lists(num1, num2).print()
+
