@@ -207,3 +207,40 @@ print("Test 2.5")
 print("Should print 2 9 8")
 sum_lists(num1, num2).print()
 
+def palindromes(head):
+    """
+        Determine if a linked list is a palindrome.
+        O(N) space
+        O(N) time
+    """
+    reversed_list = reverse_ll(head)
+    while head != None or reversed_list != None:
+        if head.val != reversed_list.val:
+            return False
+        head = head.next
+        reversed_list = reversed_list.next
+    return True
+
+def reverse_ll(head):
+    reversed_list = None
+    while head != None:
+        reversed_list = Node(head.val, reversed_list)
+        head = head.next
+    return reversed_list
+
+ll6 = LinkedList()
+ll6.append(1)
+ll6.append(2)
+ll6.append(3)
+ll6.append(4)
+print("Test 2.6")
+print("Should print False")
+print(palindromes(ll6.head))
+ll6 = LinkedList()
+ll6.append(1)
+ll6.append(2)
+ll6.append(2)
+ll6.append(1)
+print("Should print True")
+print(palindromes(ll6.head))
+print()
