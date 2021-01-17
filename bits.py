@@ -1,3 +1,4 @@
+# import numpy as np
 
 def insertion(M, N, i, j):
     """
@@ -52,3 +53,31 @@ print("Test 5.2")
 print("Should be 101")
 print(binary_to_string(0.625))
 print()
+
+
+def flip_bit_to_wiin(x):
+    """
+        Given an integer and you can flip exactly one bit from a 0 to 1. Find the length of the longest sequence of 1s you could create.
+        ex) x = 1775 == 11011101111
+            output: 8
+        O(1) space
+        O(B) time where B is the number of bits of x
+    """
+    prev_len = 0
+    cur_len = 0
+    max_len = 0
+    while x != 0:
+        if x & 1 == 1:
+            cur_len += 1
+        else:
+            # If the next bit is 0, 2 zeros in a row, so set prev_len to 0
+            prev_len = 0 if x & 2 == 0 else cur_len + 1
+            cur_len = 0
+        # x = np.right_shift(x, 1)
+        x >>= 1
+        max_len = max(prev_len + cur_len, max_len)
+    return max_len
+
+print("Test 5.3")
+print("Should print 8")
+print(flip_bit_to_wiin(1775))
