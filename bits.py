@@ -55,7 +55,7 @@ print(binary_to_string(0.625))
 print()
 
 
-def flip_bit_to_wiin(x):
+def flip_bit_to_win(x):
     """
         Given an integer and you can flip exactly one bit from a 0 to 1. Find the length of the longest sequence of 1s you could create.
         ex) x = 1775 == 11011101111
@@ -80,4 +80,60 @@ def flip_bit_to_wiin(x):
 
 print("Test 5.3")
 print("Should print 8")
-print(flip_bit_to_wiin(1775))
+print(flip_bit_to_win(1775))
+print()
+
+
+def next_number(x):
+    """
+        Given a positive integer, print the next smallest and the next largest number
+        that have the same number of 1 bits in their binary representation.
+    """
+    print(get_next_largest(x))
+    # print(get_next_smallest(x))
+
+def get_next_largest(x):
+    """
+                        p = pos of the first occurrence of "01" = #0s on the right + #1s on the right
+                        ↓
+        ex) input: 6 = 00110
+           output: 9 = 01001
+
+    """
+    # Calculate the p
+    c = x
+    c0, c1 = 0, 0
+    if c & 1 == 0:
+        while c & 1 == 0 and c != 0:
+            c0 += 1
+            c >>= 1
+    while c & 1 == 1 and c != 0:
+        c1 += 1
+        c >>= 1
+    p = c0 + c1
+
+    # If 01 doesn't appear, return -1
+    if c0 + c1 == 31 or c0 + c1 == 0:
+        return -1
+
+    x |= (1 << p) # Flip 0 of the first occurrence of 01
+    x &= (-1 << p) # Clear 0th ~ (p-1)th bits
+    x |= (1 << (c1-1)) - 1 # Replace c1-1 0s to 1s to get a total of c1 1s.
+    return x
+
+def get_next_smallest(x):
+    """
+        Similer to get_next_largest:
+        1. find the position of 1 such that "10" appears for the first time from LSB
+        2. replace p with 0
+        3. clear all bits to the right
+        4. insert c1 + 1 1s from right after p in order to maximize the value
+    """
+    pass
+
+print("Test 5.4")
+print("Should print 6")
+next_number(5)
+print("Should print 25")
+next_number(22)
+print()
