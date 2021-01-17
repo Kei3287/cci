@@ -149,3 +149,40 @@ def debugger(n):
         => True if n is a power of 2. False ow
     """
     return ((n & (n-1)) == 0)
+
+def conversion(A, B):
+    """
+        Determine the number of bits you would need to flip to convert integer A to integer B.
+        ex) A = 29 = 11101,
+            B = 15 = 01111
+            output: 2
+        O(1) space
+        O(N) time where N is the number of bits of the integer
+    """
+    C = A ^ B
+    diff = 0
+    while C != 0:
+        if C & 1 == 1:
+            diff += 1
+        C >>= 1
+    return diff
+
+def conversion_fast(A, B):
+    """
+        n = n & (n-1) will clear the least set bit (set rightmost 1 to 0).
+        ex) n = 110
+            n-1 = 101    => n & (n-1) = 100
+        O(1) space
+        O(K) time where K is the number of 1s in C = A ^ B (difference between A & B).
+    """
+    C = A ^ B
+    diff = 0
+    while C != 0:
+        diff += 1
+        C = C & (C-1)
+    return diff
+
+print("Test 5.6")
+print("Should print 2")
+print(conversion(29, 15))
+print(conversion_fast(29, 15))
