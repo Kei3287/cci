@@ -137,3 +137,15 @@ next_number(5)
 print("Should print 25")
 next_number(22)
 print()
+
+def debugger(n):
+    """
+        Explain what ((n & (n-1)) == 0) does.
+        ex) n = 00100
+            n-1 = 11011    =>  n & (n-1) = 00000
+        ex) n = 11100
+            n-1 = 11011    => n & (n-1) = 110000
+        => It is true only if there is only one 1 bit in n.
+        => True if n is a power of 2. False ow
+    """
+    return ((n & (n-1)) == 0)
