@@ -186,3 +186,20 @@ print("Test 5.6")
 print("Should print 2")
 print(conversion(29, 15))
 print(conversion_fast(29, 15))
+print()
+
+
+def pairwise_swap(x):
+    """
+        Swap odd and even bits in an integer with as few instructions as possible.
+        (Assume int is 32 bit)
+        ex) 1001 -> 0110
+            mask for odd bits = 101010 = 0xaaaaaaaa
+            mask for even bits= 010101 = 0x55555555
+    """
+    return (x & 0xaaaaaaaa) >> 1 | (x & 0x55555555) << 1
+
+print("Test 5.7")
+print("Should print 6")
+print(pairwise_swap(9))
+print()
