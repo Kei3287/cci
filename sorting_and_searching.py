@@ -1,3 +1,4 @@
+from collections import defaultdict
 import numpy as np
 
 def sorted_merge(A, B, len_A, len_B):
@@ -27,4 +28,27 @@ print("Test 10.1")
 print("A: {}".format(A))
 print("B: {}".format(B))
 print(sorted_merge(A, B, 5, 7))
+print()
+
+def group_anagrams(arr):
+    """
+        Sort an array of strings so that all the anagrams are next to each other.
+        anagrams == a word, phrase, or name formed by rearranging the letters of another
+                 <=> same frequencies for all characters
+        O(N) space
+        O(Nk) time where k = len of the longest string in arr
+
+        soln2: Sort each character, then sort the entire array. O(NlogN + Nklogk) time
+    """
+    anagrams = defaultdict(list)
+    for s in arr:
+        key = [0] * 26
+        for c in s:
+            key[ord(c) - ord('a')] += 1
+        anagrams[tuple(key)].append(s)
+    return [item for sublist in list(anagrams.values()) for item in sublist]
+
+print("Test 10.2")
+an = ["dog", "cat", "god"]
+print(group_anagrams(an))
 print()
