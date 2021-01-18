@@ -203,3 +203,13 @@ print("Test 5.7")
 print("Should print 6")
 print(pairwise_swap(9))
 print()
+
+
+def draw_line():
+    """
+        A monochrome screen is stored as a single array of bytes, allowing eight consecutive pixels to be stored in one byte.
+        The screen has width w, where w is divisible by 8. The height of the screen = len(array) / width
+        Draw a horizontal line from (x1, y) to (x2, y).
+    """
+    pass
+
