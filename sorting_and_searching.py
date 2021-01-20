@@ -52,3 +52,37 @@ print("Test 10.2")
 an = ["dog", "cat", "god"]
 print(group_anagrams(an))
 print()
+
+
+def search_in_rotated_array(arr, elem):
+    """
+        Given a sorted array (increasing order) of n integers that has been rotated an unknown number of times.
+        Find an element in the array.
+        O(1) space
+        O(logN) time
+    """
+    if len(arr) == 1 or len(arr) == 0:
+        return 0
+    middle = len(arr) // 2
+    if arr[middle] == elem:
+        return middle
+    if arr[0] < middle:
+        # left half is in order
+        if elem >= arr[0] and elem < middle:
+            return search_in_rotated_array(arr[:middle], elem)
+        else:
+            return middle + search_in_rotated_array(arr[middle:], elem)
+    else:
+        # left half is out of order => right half is in order
+        if elem >= middle and arr[-1] >= elem:
+            return middle + search_in_rotated_array(arr[middle:], elem)
+        else:
+            return search_in_rotated_array(arr[:middle], elem)
+
+print("Test 10.2")
+arr = [15, 16, 1, 2, 5, 7]
+print("Should print 4")
+print(search_in_rotated_array(arr, 5))
+print("Should print 1")
+print(search_in_rotated_array(arr, 1))
+print()
