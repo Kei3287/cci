@@ -79,10 +79,58 @@ def search_in_rotated_array(arr, elem):
         else:
             return search_in_rotated_array(arr[:middle], elem)
 
-print("Test 10.2")
+print("Test 10.3")
 arr = [15, 16, 1, 2, 5, 7]
 print("Should print 4")
 print(search_in_rotated_array(arr, 5))
 print("Should print 1")
 print(search_in_rotated_array(arr, 1))
 print()
+
+class Listy():
+    def __init__(self, arr):
+        self.arr = arr
+
+    def get_element(self, i):
+        if len(self.arr) <= i:
+            return -1
+        return self.arr[i]
+
+def sorted_search_no_size(listy, x):
+    """
+        Listy is an array-like data structure (only supports positive integer) which lacks a size method.
+        It has an get_element(i) method that runs in O(1) time. If i is beyond the bounds of the data structure, it returns -1.
+
+        Given a Listy which contains sorted, positive integers, find the index at which an element x occurs.
+        If x occurs multiple times, you may return any index.
+
+        O(logN) space (recursive call stacks for binary search)
+        O(logN) time
+    """
+    # Find the length of Listy in O(logN)
+    # If we keep doubling the size, it takes k steps to find the length.
+    # 2^k = N      => k = logN steps
+    index = 1
+    while listy.get_element(index) != 1 and x > listy.get_element(index):
+        index *= 2
+    return binary_search(listy, x, 0, index)
+
+def binary_search(listy, x, low, high):
+    if low > high:
+        return -1
+    mid = (low + high) // 2
+    val = listy.get_element(mid)
+    if val == x:
+        return mid
+    if val > x:
+        return binary_search(listy, x, low, mid-1)
+    else:
+        return binary_search(listy, x, mid+1, high)
+
+print("Test 10.4")
+arr = [1, 2, 5, 7, 10]
+listy = Listy(arr)
+print("Should print 3")
+print(sorted_search_no_size(listy, 7))
+print("Should print 0")
+print(sorted_search_no_size(listy, 1))
