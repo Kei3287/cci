@@ -134,3 +134,49 @@ print("Should print 3")
 print(sorted_search_no_size(listy, 7))
 print("Should print 0")
 print(sorted_search_no_size(listy, 1))
+
+def sparse_search(arr, str):
+    """
+        Given a sorted array of strings that is interspersed with empty strings, find the location of a given string.
+        O(logN) space
+        O(N) time
+    """
+    return sparse_binary_search(arr, str, 0, len(arr))
+
+def sparse_binary_search(arr, x, low, high):
+    if low > high:
+        return -1
+    mid = (low + high) // 2
+    val = arr[mid]
+    if val == x:
+        return mid
+    elif val == "":
+        # Find the closest non empty string from mid
+        left = mid - 1
+        right = mid + 1
+        while True:
+            if left < low and right > high:
+                return -1
+            elif left >= low and arr[left] != "":
+                mid = left
+                val = arr[mid]
+                break
+            elif right < high and arr[right] != "":
+                mid = right
+                val = arr[mid]
+                break
+            right += 1
+            left -= 1
+
+    if val > x:
+        return sparse_binary_search(arr, x, low, mid-1)
+    else:
+        return sparse_binary_search(arr, x, mid+1, high)
+
+
+
+print("Test 10.5")
+arr = ["at", "", "", "", "ball", "", "", "", "car", "", ""]
+print("should print 8")
+print(sparse_search(arr, "car"))
+
