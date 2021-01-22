@@ -180,3 +180,14 @@ arr = ["at", "", "", "", "ball", "", "", "", "car", "", ""]
 print("should print 8")
 print(sparse_search(arr, "car"))
 
+def sort_big_file(files):
+    """
+        Imagine you have a 20 GB file with one string per line.
+        Explain how you would sort the file.
+    """
+    # Divide the file into chunks of x megabytes each (amount of memory available).
+    # Then sort each chunk separately, then merge them as follows.
+    # To merge them, build a min heap insert the first element of each chunk.
+    # Keep removing the min val and take the next element from the same chunk where the min val came from.
+    # memory for min heap = (20GB / number of chunks) * 4 bytes (if integer)
+    pass
