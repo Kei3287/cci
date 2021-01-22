@@ -244,7 +244,6 @@ def sorted_matrix_search(mat, elem):
         Write an algorithm to find the element.
 
         soln1: run binary search on each row.
-        O(1) space
         O(MlogN) time
     """
     for i in range(len(mat)):
@@ -258,3 +257,25 @@ print("Test 10.9")
 print("Should print (2, 1)")
 print(sorted_matrix_search(mat, 8))
 print()
+
+def peaks_and_valleys(arr):
+    """
+        peak : an element which is greater than or equal to the adjacent integers
+        valley : an element which is less than or equal to the adjacent integers.
+        Given an array of integers, sort the array into an alternating sequence of peaks and valleys.
+        ex) input = [5, 3, 1, 2, 4]
+            output = [2, 1, 4, 3, 5]   => peak: {2, 4, 5}, valley: {1, 3}
+
+        O(NlogN) time
+    """
+    arr = sorted(arr)
+    i = 1
+    while i < len(arr):
+        temp = arr[i-1]
+        arr[i-1] = arr[i]
+        arr[i] = temp
+        i += 2
+    return arr
+print("Test 10.11")
+arr = [5, 3, 1, 2, 4]
+print(peaks_and_valleys(arr))
