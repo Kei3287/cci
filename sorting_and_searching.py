@@ -134,6 +134,7 @@ print("Should print 3")
 print(sorted_search_no_size(listy, 7))
 print("Should print 0")
 print(sorted_search_no_size(listy, 1))
+print()
 
 def sparse_search(arr, str):
     """
@@ -179,6 +180,7 @@ print("Test 10.5")
 arr = ["at", "", "", "", "ball", "", "", "", "car", "", ""]
 print("should print 8")
 print(sparse_search(arr, "car"))
+print()
 
 def sort_big_file(file):
     """
@@ -207,14 +209,14 @@ class BitArray():
         # To store n bits, we need n / 32 + 1 integers (Assuming int is 32 bits)
         self.bits = [0] * ((n >> 5) + 1)
 
-    def get_pos(self, pos):
-        index = pos >> 5
-        bit_index = pos & 0x1F
+    def get_pos(self, val):
+        index = val >> 5
+        bit_index = val & 0x1F
         return (self.bits[index] & 1 << bit_index) != 0
 
-    def set(self, pos):
-        index = pos >> 5
-        bit_index = pos & 0x1F
+    def set(self, val):
+        index = val >> 5
+        bit_index = val & 0x1F
         self.bits[index] |= (1 << bit_index)
 
 def find_duplicates(arr):
@@ -234,3 +236,25 @@ print("Test 10.8")
 arr = [ 33, 2, 4, 5, 8, 2, 5, 10]
 print("Should print 2 5")
 find_duplicates(arr)
+print()
+
+def sorted_matrix_search(mat, elem):
+    """
+        Given an M by N matrix where each row and column is sorted in ascending order.
+        Write an algorithm to find the element.
+
+        soln1: run binary search on each row.
+        O(1) space
+        O(MlogN) time
+    """
+    for i in range(len(mat)):
+        pos = binary_search(Listy(mat[i]), elem, 0, len(mat[i]))
+        if pos != -1:
+            return (i, pos)
+    return -1
+
+mat = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]
+print("Test 10.9")
+print("Should print (2, 1)")
+print(sorted_matrix_search(mat, 8))
+print()
