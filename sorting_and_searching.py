@@ -180,7 +180,7 @@ arr = ["at", "", "", "", "ball", "", "", "", "car", "", ""]
 print("should print 8")
 print(sparse_search(arr, "car"))
 
-def sort_big_file(files):
+def sort_big_file(file):
     """
         Imagine you have a 20 GB file with one string per line.
         Explain how you would sort the file.
@@ -191,3 +191,14 @@ def sort_big_file(files):
     # Keep removing the min val and take the next element from the same chunk where the min val came from.
     # memory for min heap = (20GB / number of chunks) * 4 bytes (if integer)
     pass
+
+def missing_int(file):
+    """
+        Given an input file with four billion non-negative integers, provide an algorithm
+        to generate an integer that is not contained in the file.
+        Assume you have 1 GB of memory available for this task.
+    """
+    # 1GB == 8 billion bits, so use bit vector to map each bit to an integer.
+    # scan file and set each bit, then return the integer where the bit is set to 0.
+    pass
+
