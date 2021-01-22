@@ -202,3 +202,35 @@ def missing_int(file):
     # scan file and set each bit, then return the integer where the bit is set to 0.
     pass
 
+class BitArray():
+    def __init__(self, n):
+        # To store n bits, we need n / 32 + 1 integers (Assuming int is 32 bits)
+        self.bits = [0] * ((n >> 5) + 1)
+
+    def get_pos(self, pos):
+        index = pos >> 5
+        bit_index = pos & 0x1F
+        return (self.bits[index] & 1 << bit_index) != 0
+
+    def set(self, pos):
+        index = pos >> 5
+        bit_index = pos & 0x1F
+        self.bits[index] |= (1 << bit_index)
+
+def find_duplicates(arr):
+    """
+        Given an array with numbers 1 - N where N <= 32000.
+        The array may have duplicate and you don't know what N is.
+        With only 4 kilobytes (4 * 8bits * 2^10 bits > 32000) of memory available, print all duplicate elements in the array.
+    """
+    ba = BitArray(32000)
+    for val in arr:
+        if ba.get_pos(val) == 1:
+            print(val)
+        else:
+            ba.set(val)
+
+print("Test 10.8")
+arr = [ 33, 2, 4, 5, 8, 2, 5, 10]
+print("Should print 2 5")
+find_duplicates(arr)
